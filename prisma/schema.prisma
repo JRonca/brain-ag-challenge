@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Farmer {
+  id            String       @id @default(uuid())
+  name          String
+  document      String       @unique
+  document_type DocumentType
+  created_at    DateTime     @default(now())
+  updated_at    DateTime     @updatedAt
+  farms         Farm[]
+
+  @@map("farmers")
+}
+
+model Farm {
+  id             String   @id @default(uuid())
+  name           String
+  city           String
+  state          String
+  totalArea      Float
+  arableArea     Float
+  vegetationArea Float
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+  farmerId       String   @map("farmer_id")
+
+  farmer      Farmer        @relation(fields: [farmerId], references: [id])
+  PlantedCrop PlantedCrop[]
+
+  @@map("farms")
+}
+
+model Harvest {
+  id          String        @id @default(uuid())
+  description String
+  year        Int
+  createdAt   DateTime      @default(now()) @map("created_at")
+  updatedAt   DateTime      @updatedAt @map("updated_at")
+  PlantedCrop PlantedCrop[]
+
+  @@map("harvests")
+}
+
+model PlantedCrop {
+  id        String @id @default(uuid())
+  name      String
+  farmId    String @map("farm_id")
+  harvestId String @map("harvest_id")
+
+  farm    Farm    @relation(fields: [farmId], references: [id])
+  harvest Harvest @relation(fields: [harvestId], references: [id])
+
+  @@map("planted_crops")
+}
+
+enum DocumentType {
+  CPF
+  CNPJ
+}
