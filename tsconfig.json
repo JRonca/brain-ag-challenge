@@ -8,8 +8,12 @@
     "allowSyntheticDefaultImports": true,
     "target": "ES2021",
     "sourceMap": true,
+    "resolveJsonModule": true,
     "paths": {
-      "@/*": ["src/*"]
+      "@core/*": ["src/core/*"],
+      "@domain/*": ["src/domain/*"],
+      "@infra/*": ["src/infra/*"],
+      "test/*": ["test/*"]
     },
     "outDir": "./dist",
     "baseUrl": "./",

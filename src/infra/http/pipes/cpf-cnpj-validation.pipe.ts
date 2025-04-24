@@ -4,7 +4,7 @@ import {
   ArgumentMetadata,
   BadRequestException,
 } from '@nestjs/common';
-import { DocumentValidator } from '@/core/validators/document.validator';
+import { DocumentValidator } from '@core/validators/document.validator';
 
 @Injectable()
 export class DocumentValidationPipe implements PipeTransform {
