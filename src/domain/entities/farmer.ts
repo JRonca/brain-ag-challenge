@@ -1,10 +1,10 @@
 import { Entity } from '@core/entities/entity';
 import { UniqueEntityID } from '@core/entities/unique-entity-id';
-
+import { DocumentType } from '@infra/database/prisma/enums/document-type.enum';
 interface FarmerProps {
   name: string;
   document: string;
-  documentType: string;
+  documentType: DocumentType;
 }
 
 export class Farmer extends Entity<FarmerProps> {
@@ -22,10 +22,10 @@ export class Farmer extends Entity<FarmerProps> {
     this.props.document = document;
   }
 
-  get documentType(): string {
+  get documentType(): DocumentType {
     return this.props.documentType;
   }
-  set documentType(documentType: string) {
+  set documentType(documentType: DocumentType) {
     this.props.documentType = documentType;
   }
 

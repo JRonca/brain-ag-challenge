@@ -1,37 +1,40 @@
 import { UpdateFarmerUseCase } from './update-farmer';
-import { InMemoryFarmerRepository } from 'test/repositories/in-memory-farmer-repository';
+import { InMemoryFarmersRepository } from 'test/repositories/in-memory-farmer-repository';
 import { Farmer } from '@domain/entities/farmer';
 import { UniqueEntityID } from '@core/entities/unique-entity-id';
 import { ResourceNotFoundError } from '@core/errors/resource-not-found-error';
+import { DocumentType } from '@infra/database/prisma/enums/document-type.enum';
 
 let sut: UpdateFarmerUseCase;
-let inMemoryFarmerRepository: InMemoryFarmerRepository;
+let inMemoryFarmersRepository: InMemoryFarmersRepository;
 
 describe('Update Farmer Use Case', () => {
   beforeEach(async () => {
-    inMemoryFarmerRepository = new InMemoryFarmerRepository();
+    inMemoryFarmersRepository = new InMemoryFarmersRepository();
 
-    sut = new UpdateFarmerUseCase(inMemoryFarmerRepository);
+    sut = new UpdateFarmerUseCase(inMemoryFarmersRepository);
   });
 
   it('should update a farmer successfully', async () => {
     const farmer = Farmer.create({
       name: 'John Doe',
       document: '56860070986',
-      documentType: 'CPF',
+      documentType: DocumentType.CPF,
     });
-    const farmerToUpdate = await inMemoryFarmerRepository.create(farmer);
+    const farmerToUpdate = await inMemoryFarmersRepository.create(farmer);
 
     const response = await sut.execute({
       id: farmerToUpdate.id,
       name: 'John Doe Updated',
       document: '68097878000120',
-      documentType: 'CNPJ',
+      documentType: DocumentType.CNPJ,
     });
 
-    expect(response.farmer.id).toBeTruthy();
-    expect(response.farmer.id).toBeInstanceOf(UniqueEntityID);
-    expect(response.farmer.document).toBe('68097878000120');
+    if (response.isRight()) {
+      expect(response.value.farmer.id).toBeTruthy();
+      expect(response.value.farmer.id).toBeInstanceOf(UniqueEntityID);
+      expect(response.value.farmer.document).toBe('68097878000120');
+    }
   });
 
   it('should not update a farmer not created', async () => {
@@ -39,9 +42,13 @@ describe('Update Farmer Use Case', () => {
       id: new UniqueEntityID('non-existing-id'),
       name: 'John Doe Updated',
       document: '68097878000120',
-      documentType: 'CNPJ',
+      documentType: DocumentType.CNPJ,
     };
-    await expect(() => sut.execute(farmerData)).rejects.toBeInstanceOf(
+
+    const result = await sut.execute(farmerData);
+
+    expect(result.isLeft()).toBe(true);
+    expect(result.value).toBeInstanceOf(
       ResourceNotFoundError,
     );
   });

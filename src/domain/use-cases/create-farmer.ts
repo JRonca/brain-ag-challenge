@@ -1,21 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { Farmer } from '../entities/farmer';
-import { FarmerRepository } from '../repositories/farmer-repository';
+import { FarmersRepository } from '../repositories/farmer-repository';
 import { FarmerAlreadyExistsError } from './errors/farmer-already-exists-error';
+import { DocumentType } from '@infra/database/prisma/enums/document-type.enum';
+import { Either, left, right } from '@core/either';
 
 interface CreateFarmerUseCaseRequest {
   name: string;
   document: string;
-  documentType: string;
+  documentType: DocumentType;
 }
 
-interface CreateFarmerUseCaseResponse {
-  farmer: Farmer;
-}
+type CreateFarmerUseCaseResponse = Either<FarmerAlreadyExistsError, { farmer: Farmer }>;
 
 @Injectable()
 export class CreateFarmerUseCase {
-  constructor(private farmerRepository: FarmerRepository) {}
+  constructor(private farmersRepository: FarmersRepository) {}
 
   async execute({
     name,
@@ -23,10 +23,10 @@ export class CreateFarmerUseCase {
     documentType,
   }: CreateFarmerUseCaseRequest): Promise<CreateFarmerUseCaseResponse> {
     const farmerWithSameDocument =
-      await this.farmerRepository.findByDocument(document);
+      await this.farmersRepository.findByDocument(document);
 
     if (farmerWithSameDocument) {
-      throw new FarmerAlreadyExistsError(document);
+      return left(new FarmerAlreadyExistsError(document));
     }
 
     const farmer = Farmer.create({
@@ -35,10 +35,10 @@ export class CreateFarmerUseCase {
       documentType,
     });
 
-    await this.farmerRepository.create(farmer);
+    await this.farmersRepository.create(farmer);
 
-    return {
+    return right({
       farmer,
-    };
+    });
   }
 }

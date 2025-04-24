@@ -24,7 +24,7 @@ export class DocumentValidationPipe implements PipeTransform {
         throw new BadRequestException('Invalid document');
       }
 
-      value.document_type = documentType;
+      value.documentType = documentType;
     }
     return value;
   }

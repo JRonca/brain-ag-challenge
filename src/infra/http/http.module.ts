@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
 import { CreateFarmerController } from './controllers/create-farmer.controller';
-import { PrismaService } from '../database/prisma/prisma.service';
+import { DatabaseModule } from '@infra/database/database.module';
+import { CreateFarmerUseCase } from '@domain/use-cases/create-farmer';
 
 @Module({
+  imports: [DatabaseModule],
   controllers: [CreateFarmerController],
-  providers: [PrismaService],
+  providers: [CreateFarmerUseCase],
 })
 export class HttpModule {}

@@ -1,8 +1,8 @@
 import { UniqueEntityID } from '@core/entities/unique-entity-id';
 import { Farmer } from '@domain/entities/farmer';
-import { FarmerRepository } from '@domain/repositories/farmer-repository';
+import { FarmersRepository } from '@domain/repositories/farmer-repository';
 
-export class InMemoryFarmerRepository implements FarmerRepository {
+export class InMemoryFarmersRepository implements FarmersRepository {
   public items: Farmer[] = [];
 
   async list(): Promise<Farmer[]> {

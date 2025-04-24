@@ -1,23 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import { Farmer } from '../entities/farmer';
-import { FarmerRepository } from '../repositories/farmer-repository';
+import { FarmersRepository } from '../repositories/farmer-repository';
 import { ResourceNotFoundError } from '@core/errors/resource-not-found-error';
 import { UniqueEntityID } from '@core/entities/unique-entity-id';
+import { DocumentType } from '@infra/database/prisma/enums/document-type.enum';
+import { Either, left, right } from '@core/either';
 
 interface UpdateFarmerUseCaseRequest {
   id: UniqueEntityID;
   name?: string;
   document?: string;
-  documentType?: string;
+  documentType?: DocumentType;
 }
 
-interface UpdateFarmerUseCaseResponse {
-  farmer: Farmer;
-}
+type UpdateFarmerUseCaseResponse = Either<ResourceNotFoundError, { farmer: Farmer }>;
 
 @Injectable()
 export class UpdateFarmerUseCase {
-  constructor(private farmerRepository: FarmerRepository) {}
+  constructor(private farmersRepository: FarmersRepository) {}
 
   async execute({
     id,
@@ -25,20 +25,20 @@ export class UpdateFarmerUseCase {
     document,
     documentType,
   }: UpdateFarmerUseCaseRequest): Promise<UpdateFarmerUseCaseResponse> {
-    const farmer = await this.farmerRepository.findById(id);
+    const farmer = await this.farmersRepository.findById(id);
 
     if (!farmer) {
-      throw new ResourceNotFoundError();
+      return left(new ResourceNotFoundError());
     }
 
     farmer.document = document || farmer.document;
     farmer.documentType = documentType || farmer.documentType;
     farmer.name = name || farmer.name;
 
-    const updatesFarmer = await this.farmerRepository.update(farmer);
+    const updatesFarmer = await this.farmersRepository.update(farmer);
 
-    return {
+    return right({
       farmer: updatesFarmer,
-    };
+    });
   }
 }
