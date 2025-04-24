@@ -1,55 +1,46 @@
-import { UpdateFarmerUseCase } from './update-farmer';
+import { DeleteFarmerUseCase } from './delete-farmer';
 import { InMemoryFarmersRepository } from 'test/repositories/in-memory-farmer-repository';
 import { Farmer } from '@domain/entities/farmer';
 import { UniqueEntityID } from '@core/entities/unique-entity-id';
 import { ResourceNotFoundError } from '@core/errors/resource-not-found-error';
 import { DocumentType } from '@infra/database/prisma/enums/document-type.enum';
 
-let sut: UpdateFarmerUseCase;
+let sut: DeleteFarmerUseCase;
 let inMemoryFarmersRepository: InMemoryFarmersRepository;
 
-describe('Update Farmer Use Case', () => {
+describe('Delete Farmer Use Case', () => {
   beforeEach(async () => {
     inMemoryFarmersRepository = new InMemoryFarmersRepository();
 
-    sut = new UpdateFarmerUseCase(inMemoryFarmersRepository);
+    sut = new DeleteFarmerUseCase(inMemoryFarmersRepository);
   });
 
-  it('should be able to update a farmer successfully', async () => {
+  it('should be able to delete a farmer successfully', async () => {
     const farmer = Farmer.create({
       name: 'John Doe',
       document: '56860070986',
       documentType: DocumentType.CPF,
     });
-    const farmerToUpdate = await inMemoryFarmersRepository.create(farmer);
+    const farmerToDelete = await inMemoryFarmersRepository.create(farmer);
 
     const response = await sut.execute({
-      id: farmerToUpdate.id,
-      name: 'John Doe Updated',
-      document: '68097878000120',
-      documentType: DocumentType.CNPJ,
+      id: farmerToDelete.id,
     });
 
     if (response.isRight()) {
-      expect(response.value.farmer.id).toBeTruthy();
-      expect(response.value.farmer.id).toBeInstanceOf(UniqueEntityID);
-      expect(response.value.farmer.document).toBe('68097878000120');
+      expect(response.value.deleted).toBeTruthy();
+      expect(response.value.deleted).toBe(true);
     }
   });
 
-  it('should not be able to update a farmer not created', async () => {
+  it('should not be able to delete a farmer not created', async () => {
     const farmerData = {
       id: new UniqueEntityID('non-existing-id'),
-      name: 'John Doe Updated',
-      document: '68097878000120',
-      documentType: DocumentType.CNPJ,
     };
 
     const result = await sut.execute(farmerData);
 
     expect(result.isLeft()).toBe(true);
-    expect(result.value).toBeInstanceOf(
-      ResourceNotFoundError,
-    );
+    expect(result.value).toBeInstanceOf(ResourceNotFoundError);
   });
 });

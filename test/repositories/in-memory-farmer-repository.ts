@@ -1,12 +1,13 @@
 import { UniqueEntityID } from '@core/entities/unique-entity-id';
+import { PaginationParams } from '@core/repositories/pagination-params';
 import { Farmer } from '@domain/entities/farmer';
 import { FarmersRepository } from '@domain/repositories/farmer-repository';
 
 export class InMemoryFarmersRepository implements FarmersRepository {
   public items: Farmer[] = [];
 
-  async list(): Promise<Farmer[]> {
-    return this.items;
+  async list({ page, limit }: PaginationParams): Promise<Farmer[]> {
+    return this.items.slice((page - 1) * limit, page * limit);
   }
 
   async findById(id: UniqueEntityID): Promise<Farmer | null> {

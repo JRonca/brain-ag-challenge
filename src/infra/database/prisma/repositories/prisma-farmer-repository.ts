@@ -4,13 +4,20 @@ import { FarmersRepository } from '@domain/repositories/farmer-repository';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { PrismaFarmerMapper } from '../mappers/prisma-farmer-mapper';
+import { PaginationParams } from '@core/repositories/pagination-params';
 
 @Injectable()
 export class PrismaFarmersRepository implements FarmersRepository {
   constructor(private prisma: PrismaService) {}
 
-  async list(): Promise<Farmer[]> {
-    const farmers = await this.prisma.farmer.findMany();
+  async list({ page, limit }: PaginationParams): Promise<Farmer[]> {
+    const farmers = await this.prisma.farmer.findMany({
+      skip: (page - 1) * limit,
+      take: limit,
+      orderBy: {
+        created_at: 'desc',
+      },
+    });
     return farmers.map((farmer) => {
       return PrismaFarmerMapper.toDomain(farmer);
     });

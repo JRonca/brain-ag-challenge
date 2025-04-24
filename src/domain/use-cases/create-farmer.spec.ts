@@ -14,7 +14,7 @@ describe('Create Farmer Use Case', () => {
     sut = new CreateFarmerUseCase(inMemoryFarmersRepository);
   });
 
-  it('should create a farmer successfully', async () => {
+  it('should be able to create a farmer successfully', async () => {
     const farmerData = {
       name: 'John Doe',
       document: '56860070986',
@@ -29,7 +29,7 @@ describe('Create Farmer Use Case', () => {
     }
   });
 
-  it('should not create a farmer with the same document', async () => {
+  it('should not be able to create a farmer with the same document', async () => {
     const farmerData = {
       name: 'John Doe',
       document: '56860070986',
