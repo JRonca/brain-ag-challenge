@@ -23,7 +23,7 @@ export class DeleteFarmerUseCase {
     const farmer = await this.farmersRepository.findById(id);
 
     if (!farmer) {
-      return left(new ResourceNotFoundError());
+      return left(new ResourceNotFoundError('Farmer', id.toString()));
     }
 
     await this.farmersRepository.delete(farmer.id);

@@ -41,6 +41,8 @@ describe('Delete Farmer Use Case', () => {
     const result = await sut.execute(farmerData);
 
     expect(result.isLeft()).toBe(true);
-    expect(result.value).toBeInstanceOf(ResourceNotFoundError);
+    expect(result.value).toEqual(
+      new ResourceNotFoundError('Farmer', farmerData.id.toString()),
+    );
   });
 });

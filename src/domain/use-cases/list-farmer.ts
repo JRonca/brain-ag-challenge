@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Farmer } from '../entities/farmer';
 import { FarmersRepository } from '../repositories/farmer-repository';
-import { ResourceNotFoundError } from '@core/errors/resource-not-found-error';
 import { Either, right } from '@core/either';
 
 interface ListFarmerUseCaseRequest {
@@ -9,10 +8,7 @@ interface ListFarmerUseCaseRequest {
   limit?: number;
 }
 
-type ListFarmerUseCaseResponse = Either<
-  ResourceNotFoundError,
-  { farmers: Farmer[] }
->;
+type ListFarmerUseCaseResponse = Either<null, { farmers: Farmer[] }>;
 
 @Injectable()
 export class ListFarmerUseCase {
