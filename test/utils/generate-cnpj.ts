@@ -12,10 +12,12 @@ export function generateValidCNPJ(): string {
   }
   firstDigit = firstDigit % 11 < 2 ? 0 : 11 - (firstDigit % 11);
 
+  base.push(firstDigit);
+
   for (let i = 0; i < weights2.length; i++) {
     secondDigit += base[i] * weights2[i];
   }
   secondDigit = secondDigit % 11 < 2 ? 0 : 11 - (secondDigit % 11);
 
-  return [...base, firstDigit, secondDigit].join('');
+  return [...base, secondDigit].join('');
 }

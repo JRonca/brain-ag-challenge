@@ -3,10 +3,11 @@ import { compilerOptions } from './tsconfig.json';
 
 module.exports = {
   moduleFileExtensions: ['js', 'json', 'ts'],
-  testRegex: '.*\\.spec\\.ts$',
-  rootDir: 'src',
+  testRegex: '.*\\.e2e-spec\\.ts$',
+  rootDir: './src',
+  setupFilesAfterEnv: ['../test/setup-e2e.ts'],
   transform: {
-    '^.+\\.(t|j)s$': 'ts-jest',
+    '^.+\\.(t|j)s$': ['@swc/jest'],
   },
   collectCoverageFrom: ['**/*.(t|j)s'],
   coverageDirectory: '../coverage',

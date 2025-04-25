@@ -10,13 +10,13 @@
     "sourceMap": true,
     "resolveJsonModule": true,
     "paths": {
-      "@core/*": ["src/core/*"],
-      "@domain/*": ["src/domain/*"],
-      "@infra/*": ["src/infra/*"],
-      "test/*": ["test/*"]
+      "@core/*": ["core/*"],
+      "@domain/*": ["domain/*"],
+      "@infra/*": ["infra/*"],
+      "test/*": ["../test/*"]
     },
     "outDir": "./dist",
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "incremental": true,
     "skipLibCheck": true,
     "strict": true,

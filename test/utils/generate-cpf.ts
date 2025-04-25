@@ -14,6 +14,8 @@ export function generateValidCPF(): string {
     firstDigit = 0;
   }
 
+  base.push(firstDigit);
+
   for (let i = 0; i < 10; i++) {
     secondDigit += base[i] * (11 - i);
   }
@@ -22,5 +24,5 @@ export function generateValidCPF(): string {
     secondDigit = 0;
   }
 
-  return [...base, firstDigit, secondDigit].join('');
+  return [...base, secondDigit].join('');
 }
