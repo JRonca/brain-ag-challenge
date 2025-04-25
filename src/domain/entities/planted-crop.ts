@@ -1,7 +1,7 @@
 import { Entity } from '@core/entities/entity';
 import { UniqueEntityID } from '@core/entities/unique-entity-id';
 
-interface PlantedCropProps {
+export interface PlantedCropProps {
   farmId: UniqueEntityID;
   harvestId: UniqueEntityID;
   name: string;

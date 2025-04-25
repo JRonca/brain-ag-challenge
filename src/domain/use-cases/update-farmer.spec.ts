@@ -1,9 +1,9 @@
 import { UpdateFarmerUseCase } from './update-farmer';
 import { InMemoryFarmersRepository } from 'test/repositories/in-memory-farmer-repository';
-import { Farmer } from '@domain/entities/farmer';
 import { UniqueEntityID } from '@core/entities/unique-entity-id';
 import { ResourceNotFoundError } from '@core/errors/resource-not-found-error';
 import { DocumentType } from '@infra/database/prisma/enums/document-type.enum';
+import { makeFarmer } from 'test/factories/make-farmer';
 
 let sut: UpdateFarmerUseCase;
 let inMemoryFarmersRepository: InMemoryFarmersRepository;
@@ -16,11 +16,7 @@ describe('Update Farmer Use Case', () => {
   });
 
   it('should be able to update a farmer successfully', async () => {
-    const farmer = Farmer.create({
-      name: 'John Doe',
-      document: '56860070986',
-      documentType: DocumentType.CPF,
-    });
+    const farmer = makeFarmer();
     const farmerToUpdate = await inMemoryFarmersRepository.create(farmer);
 
     const response = await sut.execute({

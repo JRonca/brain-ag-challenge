@@ -1,7 +1,7 @@
 import { Entity } from '@core/entities/entity';
 import { UniqueEntityID } from '@core/entities/unique-entity-id';
 import { DocumentType } from '@infra/database/prisma/enums/document-type.enum';
-interface FarmerProps {
+export interface FarmerProps {
   name: string;
   document: string;
   documentType: DocumentType;
