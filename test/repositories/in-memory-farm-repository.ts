@@ -4,8 +4,8 @@ import { FarmsRepository } from '@domain/repositories/farm-repository';
 export class InMemoryFarmsRepository implements FarmsRepository {
   public items: Farm[] = [];
 
-  async create(farmer: Farm): Promise<Farm> {
-    this.items.push(farmer);
-    return farmer;
+  async create(farm: Farm): Promise<Farm> {
+    this.items.push(farm);
+    return farm;
   }
 }

@@ -1,5 +1,5 @@
 import { Farm } from '../entities/farm';
 
 export abstract class FarmsRepository {
-  abstract create(Farm: Farm): Promise<Farm>;
+  abstract create(farm: Farm): Promise<Farm>;
 }
