@@ -8,4 +8,21 @@ export class InMemoryPlantedCropsRepository implements PlantedCropsRepository {
     this.items.push(plantedCrop);
     return plantedCrop;
   }
+
+  async groupByCrop(): Promise<{ crop: string; count: number }[]> {
+    const cropCounts: { [key: string]: number } = {};
+
+    for (const plantedCrop of this.items) {
+      const cropName = plantedCrop.name;
+      if (!cropCounts[cropName]) {
+        cropCounts[cropName] = 0;
+      }
+      cropCounts[cropName]++;
+    }
+
+    return Object.entries(cropCounts).map(([crop, count]) => ({
+      crop,
+      count,
+    }));
+  }
 }

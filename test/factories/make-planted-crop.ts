@@ -14,7 +14,15 @@ export function makePlantedCrop(
     {
       farmId: new UniqueEntityID(),
       harvestId: new UniqueEntityID(),
-      name: faker.food.vegetable(),
+      name: faker.helpers.arrayElement([
+        'milho',
+        'soja',
+        'trigo',
+        'aveia',
+        'cana',
+        'arroz',
+        'feijao',
+      ]),
       ...override,
     },
     id,

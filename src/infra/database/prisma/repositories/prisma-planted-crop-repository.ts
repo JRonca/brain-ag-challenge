@@ -17,4 +17,20 @@ export class PrismaPlantedCropsRepository implements PlantedCropsRepository {
 
     return PrismaPlantedCropMapper.toDomain(createdPlantedCrop);
   }
+
+  async groupByCrop(): Promise<{ crop: string; count: number }[]> {
+    return this.prisma.plantedCrop
+      .groupBy({
+        by: ['name'],
+        _count: {
+          name: true,
+        },
+      })
+      .then((result) => {
+        return result.map((item) => ({
+          crop: item.name,
+          count: item._count.name,
+        }));
+      });
+  }
 }

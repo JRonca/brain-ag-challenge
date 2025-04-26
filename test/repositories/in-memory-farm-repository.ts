@@ -14,4 +14,42 @@ export class InMemoryFarmsRepository implements FarmsRepository {
     const farm = this.items.find((farm) => farm.id === id);
     return farm ? Promise.resolve(farm) : Promise.resolve(null);
   }
+
+  async countFarms() {
+    return this.items.length;
+  }
+  async sumTotalArea() {
+    return this.items.reduce((total, farm) => total + farm.totalArea, 0);
+  }
+  async groupByState() {
+    const stateCounts: { [key: string]: number } = {};
+
+    for (const farm of this.items) {
+      const state = farm.state;
+      if (!stateCounts[state]) {
+        stateCounts[state] = 0;
+      }
+      stateCounts[state]++;
+    }
+
+    return Object.entries(stateCounts).map(([state, count]) => ({
+      state,
+      count,
+    }));
+  }
+  async getLandUsage() {
+    const totalArableArea = this.items.reduce(
+      (total, farm) => total + farm.arableArea,
+      0,
+    );
+    const totalVegetationArea = this.items.reduce(
+      (total, farm) => total + farm.vegetationArea,
+      0,
+    );
+
+    return {
+      arableArea: totalArableArea,
+      vegetationArea: totalVegetationArea,
+    };
+  }
 }
