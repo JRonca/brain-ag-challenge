@@ -11,6 +11,7 @@ import {
   ApiBadRequestResponse,
   ApiBody,
   ApiNotFoundResponse,
+  ApiTags,
 } from '@nestjs/swagger';
 import { z } from 'zod';
 import { ZodValidationPipe } from '../pipes/zod-validation.pipe';
@@ -33,6 +34,7 @@ export class UpdateFarmerController {
   constructor(private readonly updateFarmer: UpdateFarmerUseCase) {}
 
   @Put()
+  @ApiTags('Farmer')
   @HttpCode(204)
   @ApiBody({ type: UpdateFarmerRequestDto })
   @ApiNotFoundResponse({

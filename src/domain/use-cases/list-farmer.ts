@@ -11,8 +11,8 @@ export class ListFarmerUseCase {
   constructor(private readonly farmersRepository: FarmersRepository) {}
 
   async execute({
-    page = 1,
-    limit = 10,
+    page,
+    limit,
   }: ListFarmerUseCaseRequestDTO): Promise<ListFarmerUseCaseResponseDTO> {
     const listFarmer = await this.farmersRepository.list({
       page,

@@ -10,6 +10,7 @@ import {
   ApiBadRequestResponse,
   ApiBody,
   ApiConflictResponse,
+  ApiTags,
 } from '@nestjs/swagger';
 import { z } from 'zod';
 import { ZodValidationPipe } from '../pipes/zod-validation.pipe';
@@ -30,6 +31,7 @@ export class CreateFarmerController {
   constructor(private readonly createFarmer: CreateFarmerUseCase) {}
 
   @Post()
+  @ApiTags('Farmer')
   @UsePipes(new ZodValidationPipe(createFarmerBodySchema))
   @ApiBody({ type: CreateFarmerRequestDto })
   @ApiConflictResponse({

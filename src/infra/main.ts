@@ -10,8 +10,13 @@ async function bootstrap() {
     .setTitle('Brain Agriculture API')
     .setDescription('The brain agriculture API description')
     .setVersion('1.0')
+    .addTag('Farmer', 'Farmers operations')
     .build();
-  const documentFactory = () => SwaggerModule.createDocument(app, config);
+
+  const documentFactory = () =>
+    SwaggerModule.createDocument(app, config, {
+      autoTagControllers: false,
+    });
   SwaggerModule.setup('api', app, documentFactory, {
     jsonDocumentUrl: 'swagger/json',
   });
