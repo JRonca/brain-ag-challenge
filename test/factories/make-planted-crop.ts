@@ -33,7 +33,7 @@ export function makePlantedCrop(
 
 @Injectable()
 export class PlantedCropFactory {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async makePrismaPlantedCrop(
     data: Partial<PlantedCropProps> = {},

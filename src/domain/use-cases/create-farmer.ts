@@ -12,7 +12,7 @@ import { InvalidDocumentError } from './errors/invalid-document-error';
 
 @Injectable()
 export class CreateFarmerUseCase {
-  constructor(private farmersRepository: FarmersRepository) {}
+  constructor(private readonly farmersRepository: FarmersRepository) {}
 
   async execute({
     name,

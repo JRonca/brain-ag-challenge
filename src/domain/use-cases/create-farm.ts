@@ -13,8 +13,8 @@ import { InvalidTotalAreaError } from './errors/invalid-total-area-error';
 @Injectable()
 export class CreateFarmUseCase {
   constructor(
-    private farmsRepository: FarmsRepository,
-    private farmersRepository: FarmersRepository,
+    private readonly farmsRepository: FarmsRepository,
+    private readonly farmersRepository: FarmersRepository,
   ) {}
 
   async execute({

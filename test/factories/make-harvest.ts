@@ -26,7 +26,7 @@ export function makeHarvest(
 
 @Injectable()
 export class HarvestFactory {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async makePrismaHarvest(data: Partial<HarvestProps> = {}): Promise<Harvest> {
     const harvest = makeHarvest(data);

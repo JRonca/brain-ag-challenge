@@ -10,7 +10,7 @@ import {
 
 @Injectable()
 export class CreateHarvestUseCase {
-  constructor(private harvestsRepository: HarvestsRepository) {}
+  constructor(private readonly harvestsRepository: HarvestsRepository) {}
 
   async execute({
     description,

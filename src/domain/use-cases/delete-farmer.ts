@@ -9,7 +9,7 @@ import {
 
 @Injectable()
 export class DeleteFarmerUseCase {
-  constructor(private farmersRepository: FarmersRepository) {}
+  constructor(private readonly farmersRepository: FarmersRepository) {}
 
   async execute({
     id,

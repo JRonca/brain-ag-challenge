@@ -12,7 +12,7 @@ import { DocumentType } from '@infra/database/prisma/enums/document-type.enum';
 
 @Injectable()
 export class UpdateFarmerUseCase {
-  constructor(private farmersRepository: FarmersRepository) {}
+  constructor(private readonly farmersRepository: FarmersRepository) {}
 
   async execute({
     id,
@@ -37,7 +37,7 @@ export class UpdateFarmerUseCase {
       farmer.documentType = documentType;
     }
 
-    farmer.name = name || farmer.name;
+    farmer.name = name ?? farmer.name;
 
     const updatesFarmer = await this.farmersRepository.update(farmer);
 

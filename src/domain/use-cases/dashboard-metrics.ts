@@ -4,8 +4,8 @@ import { PlantedCropsRepository } from '@domain/repositories/planted-crop-reposi
 
 export class GetDashboardMetricsUseCase {
   constructor(
-    private farmsRepository: FarmsRepository,
-    private plantedCropsRepository: PlantedCropsRepository,
+    private readonly farmsRepository: FarmsRepository,
+    private readonly plantedCropsRepository: PlantedCropsRepository,
   ) {}
 
   async execute(): Promise<DashboardMetricsDTO> {

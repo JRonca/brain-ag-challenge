@@ -7,7 +7,7 @@ import { UniqueEntityID } from '@core/entities/unique-entity-id';
 
 @Injectable()
 export class PrismaFarmsRepository implements FarmsRepository {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(farm: Farm): Promise<Farm> {
     const raw = PrismaFarmMapper.toPrisma(farm);
@@ -45,7 +45,7 @@ export class PrismaFarmsRepository implements FarmsRepository {
       },
     });
 
-    return totalArea._sum.totalArea || 0;
+    return totalArea._sum.totalArea ?? 0;
   }
 
   async groupByState(): Promise<{ state: string; count: number }[]> {
@@ -74,8 +74,8 @@ export class PrismaFarmsRepository implements FarmsRepository {
     });
 
     return {
-      arableArea: landUsage._sum.arableArea || 0,
-      vegetationArea: landUsage._sum.vegetationArea || 0,
+      arableArea: landUsage._sum.arableArea ?? 0,
+      vegetationArea: landUsage._sum.vegetationArea ?? 0,
     };
   }
 }

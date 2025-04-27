@@ -27,7 +27,7 @@ export function makeFarmer(
 
 @Injectable()
 export class FarmerFactory {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async makePrismaFarmer(data: Partial<FarmerProps> = {}): Promise<Farmer> {
     const farmer = makeFarmer(data);

@@ -8,7 +8,7 @@ import {
 
 @Injectable()
 export class ListFarmerUseCase {
-  constructor(private farmersRepository: FarmersRepository) {}
+  constructor(private readonly farmersRepository: FarmersRepository) {}
 
   async execute({
     page = 1,

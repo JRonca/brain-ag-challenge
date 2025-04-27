@@ -13,9 +13,9 @@ import {
 @Injectable()
 export class CreatePlantedCropUseCase {
   constructor(
-    private plantedCropsRepository: PlantedCropsRepository,
-    private farmsRepository: FarmsRepository,
-    private harvestsRepository: HarvestsRepository,
+    private readonly plantedCropsRepository: PlantedCropsRepository,
+    private readonly farmsRepository: FarmsRepository,
+    private readonly harvestsRepository: HarvestsRepository,
   ) {}
 
   async execute({

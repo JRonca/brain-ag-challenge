@@ -17,7 +17,6 @@ import { CreateFarmerUseCase } from '@domain/use-cases/create-farmer';
 import { CreateFarmerRequestDto } from './dtos/create-farmer.controller.dto';
 import { ErrorResponseDto } from './dtos/error-response.dto';
 import { FarmerAlreadyExistsError } from '@domain/use-cases/errors/farmer-already-exists-error';
-// import { CreateFarmerDTO } from '@domain/use-cases/dtos/create-farmer.dto';
 
 const createFarmerBodySchema = z.object({
   name: z.string().min(8),
@@ -28,7 +27,7 @@ type CreateFarmerBodySchema = z.infer<typeof createFarmerBodySchema>;
 
 @Controller('farmer')
 export class CreateFarmerController {
-  constructor(private createFarmer: CreateFarmerUseCase) {}
+  constructor(private readonly createFarmer: CreateFarmerUseCase) {}
 
   @Post()
   @UsePipes(new ZodValidationPipe(createFarmerBodySchema))

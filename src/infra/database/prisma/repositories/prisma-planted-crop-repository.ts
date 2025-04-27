@@ -6,7 +6,7 @@ import { PrismaPlantedCropMapper } from '../mappers/prisma-planted-crop-mapper';
 
 @Injectable()
 export class PrismaPlantedCropsRepository implements PlantedCropsRepository {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(PlantedCrop: PlantedCrop): Promise<PlantedCrop> {
     const raw = PrismaPlantedCropMapper.toPrisma(PlantedCrop);

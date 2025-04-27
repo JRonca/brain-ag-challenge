@@ -7,7 +7,7 @@ import { UniqueEntityID } from '@core/entities/unique-entity-id';
 
 @Injectable()
 export class PrismaHarvestsRepository implements HarvestsRepository {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(harvest: Harvest): Promise<Harvest> {
     const raw = PrismaHarvestMapper.toPrisma(harvest);

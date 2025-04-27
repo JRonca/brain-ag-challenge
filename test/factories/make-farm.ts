@@ -32,7 +32,7 @@ export function makeFarm(
 
 @Injectable()
 export class FarmFactory {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async makePrismaFarm(data: Partial<FarmProps> = {}): Promise<Farm> {
     const farm = makeFarm(data);

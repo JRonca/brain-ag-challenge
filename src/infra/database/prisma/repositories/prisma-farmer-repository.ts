@@ -8,7 +8,7 @@ import { PaginationParams } from '@core/repositories/pagination-params';
 
 @Injectable()
 export class PrismaFarmersRepository implements FarmersRepository {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async list({ page, limit }: PaginationParams): Promise<Farmer[]> {
     const farmers = await this.prisma.farmer.findMany({
