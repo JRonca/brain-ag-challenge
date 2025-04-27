@@ -1,19 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { Farmer } from '../entities/farmer';
 import { FarmersRepository } from '../repositories/farmer-repository';
 import { ResourceNotFoundError } from '@core/errors/resource-not-found-error';
-import { UniqueEntityID } from '@core/entities/unique-entity-id';
+import { left, right } from '@core/either';
+import {
+  UpdateFarmerUseCaseRequestDTO,
+  UpdateFarmerUseCaseResponseDTO,
+} from './dtos/update-farmer.dto';
+import { DocumentValidator } from '@core/validators/document.validator';
+import { InvalidDocumentError } from './errors/invalid-document-error';
 import { DocumentType } from '@infra/database/prisma/enums/document-type.enum';
-import { Either, left, right } from '@core/either';
-
-interface UpdateFarmerUseCaseRequest {
-  id: UniqueEntityID;
-  name?: string;
-  document?: string;
-  documentType?: DocumentType;
-}
-
-type UpdateFarmerUseCaseResponse = Either<ResourceNotFoundError, { farmer: Farmer }>;
 
 @Injectable()
 export class UpdateFarmerUseCase {
@@ -23,16 +18,25 @@ export class UpdateFarmerUseCase {
     id,
     name,
     document,
-    documentType,
-  }: UpdateFarmerUseCaseRequest): Promise<UpdateFarmerUseCaseResponse> {
+  }: UpdateFarmerUseCaseRequestDTO): Promise<UpdateFarmerUseCaseResponseDTO> {
     const farmer = await this.farmersRepository.findById(id);
 
     if (!farmer) {
       return left(new ResourceNotFoundError('Farmer', id.toString()));
     }
+    let documentType: DocumentType | null = null;
 
-    farmer.document = document || farmer.document;
-    farmer.documentType = documentType || farmer.documentType;
+    if (document && document !== farmer.document) {
+      const documentValidator = new DocumentValidator();
+      documentType = documentValidator.getValidDocumentType(document);
+
+      if (!documentType) {
+        return left(new InvalidDocumentError());
+      }
+      farmer.document = document;
+      farmer.documentType = documentType;
+    }
+
     farmer.name = name || farmer.name;
 
     const updatesFarmer = await this.farmersRepository.update(farmer);

@@ -1,21 +1,27 @@
-import { DocumentType } from '@prisma/client';
+import { DocumentType } from '@infra/database/prisma/enums/document-type.enum';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class DocumentValidator {
-  handle(document: string): DocumentType | null {
+  getValidDocumentType(document: string): DocumentType | null {
     const cleaned = document.replace(/\D/g, '');
 
-    if (cleaned.length === 11) {
-      return this.isCpf(cleaned);
+    if (this.isCpf(cleaned)) {
+      return DocumentType.CPF;
     }
 
-    if (cleaned.length === 14) {
-      return this.isCnpj(cleaned);
+    if (this.isCnpj(cleaned)) {
+      return DocumentType.CNPJ;
     }
 
     return null;
   }
 
-  private isCpf(cpf: string): DocumentType | null {
+  private isCpf(cpf: string): boolean {
+    if (cpf.length !== 11) {
+      return false;
+    }
+
     let firstDigit = 0;
     let secondDigit = 0;
     for (let i = 0; i < 9; i++) {
@@ -26,7 +32,7 @@ export class DocumentValidator {
       firstDigit = 0;
     }
     if (firstDigit !== parseInt(cpf[9])) {
-      return null;
+      return false;
     }
 
     for (let i = 0; i < 10; i++) {
@@ -37,12 +43,16 @@ export class DocumentValidator {
       secondDigit = 0;
     }
     if (secondDigit !== parseInt(cpf[10])) {
-      return null;
+      return false;
     }
-    return 'CPF';
+    return true;
   }
 
-  private isCnpj(cnpj: string): DocumentType | null {
+  private isCnpj(cnpj: string): boolean {
+    if (cnpj.length !== 14) {
+      return false;
+    }
+
     let firstDigit = 0;
     let secondDigit = 0;
     const weights1 = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
@@ -53,7 +63,7 @@ export class DocumentValidator {
     }
     firstDigit = firstDigit % 11 < 2 ? 0 : 11 - (firstDigit % 11);
     if (firstDigit !== parseInt(cnpj[12])) {
-      return null;
+      return false;
     }
 
     for (let i = 0; i < weights2.length; i++) {
@@ -61,8 +71,8 @@ export class DocumentValidator {
     }
     secondDigit = secondDigit % 11 < 2 ? 0 : 11 - (secondDigit % 11);
     if (secondDigit !== parseInt(cnpj[13])) {
-      return null;
+      return false;
     }
-    return 'CNPJ';
+    return true;
   }
 }

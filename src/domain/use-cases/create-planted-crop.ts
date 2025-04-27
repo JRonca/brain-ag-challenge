@@ -1,22 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { PlantedCrop } from '../entities/planted-crop';
 import { PlantedCropsRepository } from '../repositories/planted-crop-repository';
-import { Either, left, right } from '@core/either';
-import { UniqueEntityID } from '@core/entities/unique-entity-id';
+import { left, right } from '@core/either';
 import { ResourceNotFoundError } from '@core/errors/resource-not-found-error';
 import { FarmsRepository } from '@domain/repositories/farm-repository';
 import { HarvestsRepository } from '@domain/repositories/harvest-repository';
-
-interface CreatePlantedCropUseCaseRequest {
-  farmId: UniqueEntityID;
-  harvestId: UniqueEntityID;
-  name: string;
-}
-
-type CreatePlantedCropUseCaseResponse = Either<
-  ResourceNotFoundError,
-  { plantedCrop: PlantedCrop }
->;
+import {
+  CreatePlantedCropUseCaseRequestDTO,
+  CreatePlantedCropUseCaseResponseDTO,
+} from '@domain/use-cases/dtos/create-planted-crop-dto';
 
 @Injectable()
 export class CreatePlantedCropUseCase {
@@ -30,7 +22,7 @@ export class CreatePlantedCropUseCase {
     farmId,
     harvestId,
     name,
-  }: CreatePlantedCropUseCaseRequest): Promise<CreatePlantedCropUseCaseResponse> {
+  }: CreatePlantedCropUseCaseRequestDTO): Promise<CreatePlantedCropUseCaseResponseDTO> {
     const farmExists = await this.farmsRepository.findById(farmId);
 
     if (!farmExists) {

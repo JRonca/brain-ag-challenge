@@ -1,14 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { Harvest } from '../entities/harvest';
 import { HarvestsRepository } from '../repositories/harvest-repository';
-import { Either, right } from '@core/either';
+import { right } from '@core/either';
 
-interface CreateHarvestUseCaseRequest {
-  description: string;
-  year: number;
-}
-
-type CreateHarvestUseCaseResponse = Either<null, { harvest: Harvest }>;
+import {
+  CreateHarvestUseCaseRequestDTO,
+  CreateHarvestUseCaseResponseDTO,
+} from './dtos/create-harvest.dto';
 
 @Injectable()
 export class CreateHarvestUseCase {
@@ -17,7 +15,7 @@ export class CreateHarvestUseCase {
   async execute({
     description,
     year,
-  }: CreateHarvestUseCaseRequest): Promise<CreateHarvestUseCaseResponse> {
+  }: CreateHarvestUseCaseRequestDTO): Promise<CreateHarvestUseCaseResponseDTO> {
     const harvest = Harvest.create({
       description,
       year,

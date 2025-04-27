@@ -1,4 +1,4 @@
-import { DashboardMetricsDTO } from '@domain/dtos/dashboard-metrics.dto';
+import { DashboardMetricsDTO } from '@domain/use-cases/dtos/dashboard-metrics.dto';
 import { FarmsRepository } from '@domain/repositories/farm-repository';
 import { PlantedCropsRepository } from '@domain/repositories/planted-crop-repository';
 

@@ -1,14 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { Farmer } from '../entities/farmer';
 import { FarmersRepository } from '../repositories/farmer-repository';
-import { Either, right } from '@core/either';
-
-interface ListFarmerUseCaseRequest {
-  page?: number;
-  limit?: number;
-}
-
-type ListFarmerUseCaseResponse = Either<null, { farmers: Farmer[] }>;
+import { right } from '@core/either';
+import {
+  ListFarmerUseCaseRequestDTO,
+  ListFarmerUseCaseResponseDTO,
+} from './dtos/list-farmer.dto';
 
 @Injectable()
 export class ListFarmerUseCase {
@@ -17,7 +13,7 @@ export class ListFarmerUseCase {
   async execute({
     page = 1,
     limit = 10,
-  }: ListFarmerUseCaseRequest): Promise<ListFarmerUseCaseResponse> {
+  }: ListFarmerUseCaseRequestDTO): Promise<ListFarmerUseCaseResponseDTO> {
     const listFarmer = await this.farmersRepository.list({
       page,
       limit,

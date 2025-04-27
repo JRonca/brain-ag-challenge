@@ -1,17 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { FarmersRepository } from '../repositories/farmer-repository';
 import { ResourceNotFoundError } from '@core/errors/resource-not-found-error';
-import { UniqueEntityID } from '@core/entities/unique-entity-id';
-import { Either, left, right } from '@core/either';
-
-interface DeleteFarmerUseCaseRequest {
-  id: UniqueEntityID;
-}
-
-type DeleteFarmerUseCaseResponse = Either<
-  ResourceNotFoundError,
-  { deleted: true }
->;
+import { left, right } from '@core/either';
+import {
+  DeleteFarmerUseCaseRequestDTO,
+  DeleteFarmerUseCaseResponseDTO,
+} from './dtos/delete-farmer.dto';
 
 @Injectable()
 export class DeleteFarmerUseCase {
@@ -19,7 +13,7 @@ export class DeleteFarmerUseCase {
 
   async execute({
     id,
-  }: DeleteFarmerUseCaseRequest): Promise<DeleteFarmerUseCaseResponse> {
+  }: DeleteFarmerUseCaseRequestDTO): Promise<DeleteFarmerUseCaseResponseDTO> {
     const farmer = await this.farmersRepository.findById(id);
 
     if (!farmer) {
