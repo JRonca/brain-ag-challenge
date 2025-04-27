@@ -29,7 +29,15 @@ describe('Create Farm Use Case', () => {
 
     const farm = makeFarm({ farmerId: farmerToUpdate.id });
 
-    const result = await sut.execute(farm);
+    const result = await sut.execute({
+      name: farm.name,
+      city: farm.city,
+      state: farm.state,
+      totalArea: farm.totalArea,
+      arableArea: farm.arableArea,
+      vegetationArea: farm.vegetationArea,
+      farmerId: farm.farmerId.toString(),
+    });
 
     if (result.isRight()) {
       expect(result.value.farm).toBeInstanceOf(Farm);
@@ -49,7 +57,15 @@ describe('Create Farm Use Case', () => {
       vegetationArea: 50,
     });
 
-    const result = await sut.execute(farm);
+    const result = await sut.execute({
+      name: farm.name,
+      city: farm.city,
+      state: farm.state,
+      totalArea: farm.totalArea,
+      arableArea: farm.arableArea,
+      vegetationArea: farm.vegetationArea,
+      farmerId: farm.farmerId.toString(),
+    });
 
     expect(result.isLeft()).toBe(true);
     expect(result.value).toEqual(new InvalidTotalAreaError());
@@ -60,7 +76,15 @@ describe('Create Farm Use Case', () => {
 
     const farm = makeFarm({ farmerId });
 
-    const result = await sut.execute(farm);
+    const result = await sut.execute({
+      name: farm.name,
+      city: farm.city,
+      state: farm.state,
+      totalArea: farm.totalArea,
+      arableArea: farm.arableArea,
+      vegetationArea: farm.vegetationArea,
+      farmerId: farm.farmerId.toString(),
+    });
 
     expect(result.isLeft()).toBe(true);
     expect(result.value).toEqual(

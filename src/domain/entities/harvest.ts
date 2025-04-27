@@ -14,7 +14,7 @@ export class Harvest extends Entity<HarvestProps> {
     return this.props.year;
   }
 
-  static create(props: Omit<HarvestProps, 'id'>, id?: UniqueEntityID): Harvest {
+  static create(props: HarvestProps, id?: UniqueEntityID): Harvest {
     const harvest = new Harvest(
       {
         ...props,

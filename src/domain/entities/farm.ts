@@ -34,7 +34,7 @@ export class Farm extends Entity<FarmProps> {
     return this.props.vegetationArea;
   }
 
-  static create(props: Omit<FarmProps, 'id'>, id?: UniqueEntityID): Farm {
+  static create(props: FarmProps, id?: UniqueEntityID): Farm {
     const farm = new Farm(
       {
         ...props,

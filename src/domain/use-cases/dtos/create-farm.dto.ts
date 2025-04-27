@@ -1,5 +1,4 @@
 import { Either } from '@core/either';
-import { UniqueEntityID } from '@core/entities/unique-entity-id';
 import { ResourceNotFoundError } from '@core/errors/resource-not-found-error';
 import { InvalidTotalAreaError } from '../errors/invalid-total-area-error';
 import { Farm } from '@domain/entities/farm';
@@ -11,7 +10,7 @@ export interface CreateFarmUseCaseRequestDTO {
   totalArea: number;
   arableArea: number;
   vegetationArea: number;
-  farmerId: UniqueEntityID;
+  farmerId: string;
 }
 
 export type CreateFarmUseCaseResponseDTO = Either<

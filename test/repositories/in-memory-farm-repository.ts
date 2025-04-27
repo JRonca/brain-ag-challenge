@@ -10,8 +10,10 @@ export class InMemoryFarmsRepository implements FarmsRepository {
     return farm;
   }
 
-  async findById(id: UniqueEntityID): Promise<Farm | null> {
-    const farm = this.items.find((farm) => farm.id === id);
+  async findById(id: string): Promise<Farm | null> {
+    const farm = this.items.find((farm) =>
+      farm.id.equals(new UniqueEntityID(id)),
+    );
     return farm ? Promise.resolve(farm) : Promise.resolve(null);
   }
 

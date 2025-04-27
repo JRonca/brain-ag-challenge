@@ -20,7 +20,7 @@ describe('Delete Farmer Use Case', () => {
     const farmerToDelete = await inMemoryFarmersRepository.create(farmer);
 
     const response = await sut.execute({
-      id: farmerToDelete.id,
+      id: farmerToDelete.id.toString(),
     });
 
     if (response.isRight()) {
@@ -34,7 +34,9 @@ describe('Delete Farmer Use Case', () => {
       id: new UniqueEntityID('non-existing-id'),
     };
 
-    const result = await sut.execute(farmerData);
+    const result = await sut.execute({
+      id: farmerData.id.toString(),
+    });
 
     expect(result.isLeft()).toBe(true);
     expect(result.value).toEqual(

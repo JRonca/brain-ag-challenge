@@ -10,8 +10,10 @@ export class InMemoryFarmersRepository implements FarmersRepository {
     return this.items.slice((page - 1) * limit, page * limit);
   }
 
-  async findById(id: UniqueEntityID): Promise<Farmer | null> {
-    const farmer = this.items.find((farmer) => farmer.id === id);
+  async findById(id: string): Promise<Farmer | null> {
+    const farmer = this.items.find((farmer) =>
+      farmer.id.equals(new UniqueEntityID(id)),
+    );
     return farmer || null;
   }
 
@@ -31,8 +33,10 @@ export class InMemoryFarmersRepository implements FarmersRepository {
     return farmer;
   }
 
-  async delete(id: UniqueEntityID): Promise<void> {
-    const index = this.items.findIndex((farmer) => farmer.id === id);
+  async delete(id: string): Promise<void> {
+    const index = this.items.findIndex(
+      (farmer) => farmer.id === new UniqueEntityID(id),
+    );
     this.items.splice(index, 1);
   }
 }

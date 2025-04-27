@@ -24,7 +24,7 @@ describe('Update Farmer Use Case', () => {
     const document = generateValidCNPJ();
 
     const response = await sut.execute({
-      id: farmerToUpdate.id,
+      id: farmerToUpdate.id.toString(),
       name: 'John Doe Updated',
       document,
     });
@@ -44,7 +44,11 @@ describe('Update Farmer Use Case', () => {
       documentType: DocumentType.CNPJ,
     };
 
-    const result = await sut.execute(farmerData);
+    const result = await sut.execute({
+      id: farmerData.id.toString(),
+      name: farmerData.name,
+      document: farmerData.document,
+    });
 
     expect(result.isLeft()).toBe(true);
     expect(result.value).toEqual(
@@ -57,7 +61,7 @@ describe('Update Farmer Use Case', () => {
     const farmerToUpdate = await inMemoryFarmersRepository.create(farmer);
 
     const result = await sut.execute({
-      id: farmerToUpdate.id,
+      id: farmerToUpdate.id.toString(),
       name: 'John Doe Updated',
       document: '1234567',
     });

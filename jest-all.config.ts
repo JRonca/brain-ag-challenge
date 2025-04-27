@@ -3,7 +3,7 @@ import { compilerOptions } from './tsconfig.json';
 
 module.exports = {
   moduleFileExtensions: ['js', 'json', 'ts'],
-  testRegex: '.*\\.e2e-spec\\.ts$',
+  testRegex: '.*\\.*spec\\.ts$',
   rootDir: './src',
   setupFilesAfterEnv: ['../test/setup-e2e.ts'],
   transform: {

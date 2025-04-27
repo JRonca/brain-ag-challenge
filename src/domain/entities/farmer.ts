@@ -29,7 +29,7 @@ export class Farmer extends Entity<FarmerProps> {
     this.props.documentType = documentType;
   }
 
-  static create(props: Omit<FarmerProps, 'id'>, id?: UniqueEntityID): Farmer {
+  static create(props: FarmerProps, id?: UniqueEntityID): Farmer {
     const farmer = new Farmer(
       {
         ...props,

@@ -19,7 +19,7 @@ import { ErrorResponseDto } from './dtos/error-response.dto';
 import { FarmerAlreadyExistsError } from '@domain/use-cases/errors/farmer-already-exists-error';
 
 const createFarmerBodySchema = z.object({
-  name: z.string().min(8),
+  name: z.string().min(6),
   document: z.string().min(11).max(18),
 });
 

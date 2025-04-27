@@ -18,10 +18,7 @@ export class PlantedCrop extends Entity<PlantedCropProps> {
     return this.props.name;
   }
 
-  static create(
-    props: Omit<PlantedCropProps, 'id'>,
-    id?: UniqueEntityID,
-  ): PlantedCrop {
+  static create(props: PlantedCropProps, id?: UniqueEntityID): PlantedCrop {
     const plantedCrop = new PlantedCrop(
       {
         ...props,

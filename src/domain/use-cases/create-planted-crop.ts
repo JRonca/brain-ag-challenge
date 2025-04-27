@@ -9,6 +9,7 @@ import {
   CreatePlantedCropUseCaseRequestDTO,
   CreatePlantedCropUseCaseResponseDTO,
 } from '@domain/use-cases/dtos/create-planted-crop-dto';
+import { UniqueEntityID } from '@core/entities/unique-entity-id';
 
 @Injectable()
 export class CreatePlantedCropUseCase {
@@ -17,7 +18,6 @@ export class CreatePlantedCropUseCase {
     private readonly farmsRepository: FarmsRepository,
     private readonly harvestsRepository: HarvestsRepository,
   ) {}
-
   async execute({
     farmId,
     harvestId,
@@ -26,18 +26,18 @@ export class CreatePlantedCropUseCase {
     const farmExists = await this.farmsRepository.findById(farmId);
 
     if (!farmExists) {
-      return left(new ResourceNotFoundError('Farm', farmId.toString()));
+      return left(new ResourceNotFoundError('Farm', farmId));
     }
 
     const harvestExists = await this.harvestsRepository.findById(harvestId);
 
     if (!harvestExists) {
-      return left(new ResourceNotFoundError('Harvest', harvestId.toString()));
+      return left(new ResourceNotFoundError('Harvest', harvestId));
     }
 
     const plantedCrop = PlantedCrop.create({
-      farmId,
-      harvestId,
+      farmId: new UniqueEntityID(farmId),
+      harvestId: new UniqueEntityID(harvestId),
       name,
     });
 

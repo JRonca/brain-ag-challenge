@@ -10,8 +10,10 @@ export class InMemoryHarvestsRepository implements HarvestsRepository {
     return harvest;
   }
 
-  findById(id: UniqueEntityID): Promise<Harvest | null> {
-    const harvest = this.items.find((harvest) => harvest.id === id);
+  findById(id: string): Promise<Harvest | null> {
+    const harvest = this.items.find((harvest) =>
+      harvest.id.equals(new UniqueEntityID(id)),
+    );
     return harvest ? Promise.resolve(harvest) : Promise.resolve(null);
   }
 }

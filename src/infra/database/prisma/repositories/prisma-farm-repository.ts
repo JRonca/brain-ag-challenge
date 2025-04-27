@@ -3,7 +3,6 @@ import { FarmsRepository } from '@domain/repositories/farm-repository';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { PrismaFarmMapper } from '../mappers/prisma-farm-mapper';
-import { UniqueEntityID } from '@core/entities/unique-entity-id';
 
 @Injectable()
 export class PrismaFarmsRepository implements FarmsRepository {
@@ -19,10 +18,10 @@ export class PrismaFarmsRepository implements FarmsRepository {
     return PrismaFarmMapper.toDomain(createdFarm);
   }
 
-  async findById(id: UniqueEntityID): Promise<Farm | null> {
+  async findById(id: string): Promise<Farm | null> {
     const farm = await this.prisma.farm.findUnique({
       where: {
-        id: id.toString(),
+        id: id,
       },
     });
 

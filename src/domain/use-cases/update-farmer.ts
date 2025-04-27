@@ -22,7 +22,7 @@ export class UpdateFarmerUseCase {
     const farmer = await this.farmersRepository.findById(id);
 
     if (!farmer) {
-      return left(new ResourceNotFoundError('Farmer', id.toString()));
+      return left(new ResourceNotFoundError('Farmer', id));
     }
     let documentType: DocumentType | null = null;
 

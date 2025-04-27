@@ -48,7 +48,11 @@ describe('Create Farm Use Case', () => {
       harvestId: harvestInMemory.id,
     });
 
-    const result = await sut.execute(plantedCrop);
+    const result = await sut.execute({
+      farmId: plantedCrop.farmId.toString(),
+      harvestId: plantedCrop.harvestId.toString(),
+      name: plantedCrop.name,
+    });
 
     if (result.isRight()) {
       expect(result.value.plantedCrop).toBeInstanceOf(PlantedCrop);
@@ -69,7 +73,11 @@ describe('Create Farm Use Case', () => {
       harvestId: harvestInMemory.id,
     });
 
-    const result = await sut.execute(plantedCrop);
+    const result = await sut.execute({
+      farmId: plantedCrop.farmId.toString(),
+      harvestId: plantedCrop.harvestId.toString(),
+      name: plantedCrop.name,
+    });
 
     expect(result.isLeft()).toBe(true);
     expect(result.value).toEqual(
@@ -91,7 +99,11 @@ describe('Create Farm Use Case', () => {
       harvestId,
     });
 
-    const result = await sut.execute(plantedCrop);
+    const result = await sut.execute({
+      farmId: plantedCrop.farmId.toString(),
+      harvestId: plantedCrop.harvestId.toString(),
+      name: plantedCrop.name,
+    });
 
     expect(result.isLeft()).toBe(true);
     expect(result.value).toEqual(

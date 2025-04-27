@@ -9,6 +9,7 @@ import {
   CreateFarmUseCaseResponseDTO,
 } from './dtos/create-farm.dto';
 import { InvalidTotalAreaError } from './errors/invalid-total-area-error';
+import { UniqueEntityID } from '@core/entities/unique-entity-id';
 
 @Injectable()
 export class CreateFarmUseCase {
@@ -35,7 +36,7 @@ export class CreateFarmUseCase {
     const farmerExists = await this.farmersRepository.findById(farmerId);
 
     if (!farmerExists) {
-      return left(new ResourceNotFoundError('Farmer', farmerId.toString()));
+      return left(new ResourceNotFoundError('Farmer', farmerId));
     }
 
     const farm = Farm.create({
@@ -45,7 +46,7 @@ export class CreateFarmUseCase {
       totalArea,
       arableArea,
       vegetationArea,
-      farmerId,
+      farmerId: new UniqueEntityID(farmerId),
     });
 
     await this.farmsRepository.create(farm);

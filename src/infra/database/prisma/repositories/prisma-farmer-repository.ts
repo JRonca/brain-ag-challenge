@@ -1,4 +1,3 @@
-import { UniqueEntityID } from '@core/entities/unique-entity-id';
 import { Farmer } from '@domain/entities/farmer';
 import { FarmersRepository } from '@domain/repositories/farmer-repository';
 import { Injectable } from '@nestjs/common';
@@ -23,10 +22,10 @@ export class PrismaFarmersRepository implements FarmersRepository {
     });
   }
 
-  async findById(id: UniqueEntityID): Promise<Farmer | null> {
+  async findById(id: string): Promise<Farmer | null> {
     const farmer = await this.prisma.farmer.findUnique({
       where: {
-        id: id.toString(),
+        id: id,
       },
     });
 
@@ -74,10 +73,10 @@ export class PrismaFarmersRepository implements FarmersRepository {
     return PrismaFarmerMapper.toDomain(updatedFarmer);
   }
 
-  async delete(id: UniqueEntityID): Promise<void> {
+  async delete(id: string): Promise<void> {
     await this.prisma.farmer.delete({
       where: {
-        id: id.toString(),
+        id: id,
       },
     });
   }
