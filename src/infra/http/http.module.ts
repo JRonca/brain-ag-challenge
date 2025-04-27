@@ -8,6 +8,8 @@ import { UpdateFarmerUseCase } from '@domain/use-cases/update-farmer';
 import { DeleteFarmerUseCase } from '@domain/use-cases/delete-farmer';
 import { ListFarmerController } from './controllers/list-farmer.controller';
 import { ListFarmerUseCase } from '@domain/use-cases/list-farmer';
+import { CreateFarmController } from './controllers/create-farm.controller';
+import { CreateFarmUseCase } from '@domain/use-cases/create-farm';
 
 @Module({
   imports: [DatabaseModule],
@@ -16,12 +18,14 @@ import { ListFarmerUseCase } from '@domain/use-cases/list-farmer';
     UpdateFarmerController,
     DeleteFarmerController,
     ListFarmerController,
+    CreateFarmController,
   ],
   providers: [
     CreateFarmerUseCase,
     UpdateFarmerUseCase,
     DeleteFarmerUseCase,
     ListFarmerUseCase,
+    CreateFarmUseCase,
   ],
 })
 export class HttpModule {}

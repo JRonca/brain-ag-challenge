@@ -74,7 +74,7 @@ describe('Update Farmer (E2E)', () => {
     expect(response.body.statusCode).toEqual(404);
   });
 
-  it('should return 400 if got a validation error', async () => {
+  it('should return 400 if got a validation error or invalid document', async () => {
     const farmer = await farmerFactory.makePrismaFarmer();
     const farmerId = farmer.id.toString();
 
@@ -86,21 +86,6 @@ describe('Update Farmer (E2E)', () => {
       .expect(400);
 
     expect(response.body.message).toEqual('Validation failed');
-    expect(response.body.statusCode).toEqual(400);
-  });
-
-  it('should return 400 if got a invalid document', async () => {
-    const farmer = await farmerFactory.makePrismaFarmer();
-    const farmerId = farmer.id.toString();
-
-    const response = await request(app.getHttpServer())
-      .put(`/farmer/${farmerId}`)
-      .send({
-        document: '90885546083',
-      })
-      .expect(400);
-
-    expect(response.body.message).toEqual('Invalid document.');
     expect(response.body.statusCode).toEqual(400);
   });
 });

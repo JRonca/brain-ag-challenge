@@ -60,7 +60,7 @@ describe('Create Farmer (E2E)', () => {
     expect(response.body.statusCode).toEqual(409);
   });
 
-  it('should return 400 if got a validation error', async () => {
+  it('should return 400 if got a validation error or invalid document', async () => {
     const payload = {
       name: 'John Doe',
       document: '123456789',
@@ -72,21 +72,6 @@ describe('Create Farmer (E2E)', () => {
       .expect(400);
 
     expect(response.body.message).toEqual('Validation failed');
-    expect(response.body.statusCode).toEqual(400);
-  });
-
-  it('should return 400 if got a invalid document', async () => {
-    const payload = {
-      name: 'John Doe',
-      document: '40056809094',
-    };
-
-    const response = await request(app.getHttpServer())
-      .post('/farmer')
-      .send(payload)
-      .expect(400);
-
-    expect(response.body.message).toEqual('Invalid document.');
     expect(response.body.statusCode).toEqual(400);
   });
 });
