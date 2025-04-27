@@ -9,7 +9,7 @@ module.exports = {
     '^.+\\.(t|j)s$': 'ts-jest',
   },
   collectCoverageFrom: ['**/*.(t|j)s'],
-  coverageDirectory: '../coverage/unit',
+  coverageDirectory: '../coverage',
   testEnvironment: 'node',
 
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
