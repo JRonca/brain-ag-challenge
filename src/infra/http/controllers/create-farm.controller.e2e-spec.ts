@@ -6,7 +6,7 @@ import { PrismaService } from '@infra/database/prisma/prisma.service';
 import { FarmerFactory } from 'test/factories/make-farmer';
 import { UniqueEntityID } from '@core/entities/unique-entity-id';
 
-describe('Create Farmer (E2E)', () => {
+describe('Create Farm (E2E)', () => {
   let app: INestApplication;
   let prisma: PrismaService;
   let farmerFactory: FarmerFactory;
@@ -25,7 +25,7 @@ describe('Create Farmer (E2E)', () => {
     await app.init();
   });
 
-  it('[POST] /farmer', async () => {
+  it('[POST] /farm', async () => {
     const farmer = await farmerFactory.makePrismaFarmer();
     const farmerId = farmer.id.toString();
 
@@ -41,19 +41,19 @@ describe('Create Farmer (E2E)', () => {
 
     expect(response.status).toBe(201);
 
-    const farmerOnDatabase = await prisma.farm.findFirst({
+    const farmOnDatabase = await prisma.farm.findFirst({
       where: {
         name: 'Farm Name',
       },
     });
 
-    expect(farmerOnDatabase).toBeTruthy();
+    expect(farmOnDatabase).toBeTruthy();
 
-    if (farmerOnDatabase) {
-      expect(farmerOnDatabase.name).toEqual('Farm Name');
-      expect(farmerOnDatabase.city).toEqual('Maringá');
-      expect(farmerOnDatabase.state).toEqual('PR');
-      expect(farmerOnDatabase.totalArea).toEqual(100);
+    if (farmOnDatabase) {
+      expect(farmOnDatabase.name).toEqual('Farm Name');
+      expect(farmOnDatabase.city).toEqual('Maringá');
+      expect(farmOnDatabase.state).toEqual('PR');
+      expect(farmOnDatabase.totalArea).toEqual(100);
     }
   });
 

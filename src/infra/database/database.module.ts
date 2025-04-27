@@ -4,6 +4,10 @@ import { PrismaFarmersRepository } from './prisma/repositories/prisma-farmer-rep
 import { FarmersRepository } from '@domain/repositories/farmer-repository';
 import { FarmsRepository } from '@domain/repositories/farm-repository';
 import { PrismaFarmsRepository } from './prisma/repositories/prisma-farm-repository';
+import { HarvestsRepository } from '@domain/repositories/harvest-repository';
+import { PrismaHarvestsRepository } from './prisma/repositories/prisma-harvest-repository';
+import { PlantedCropsRepository } from '@domain/repositories/planted-crop-repository';
+import { PrismaPlantedCropsRepository } from './prisma/repositories/prisma-planted-crop-repository';
 
 @Module({
   providers: [
@@ -16,7 +20,21 @@ import { PrismaFarmsRepository } from './prisma/repositories/prisma-farm-reposit
       provide: FarmsRepository,
       useClass: PrismaFarmsRepository,
     },
+    {
+      provide: HarvestsRepository,
+      useClass: PrismaHarvestsRepository,
+    },
+    {
+      provide: PlantedCropsRepository,
+      useClass: PrismaPlantedCropsRepository,
+    },
   ],
-  exports: [PrismaService, FarmersRepository, FarmsRepository],
+  exports: [
+    PrismaService,
+    FarmersRepository,
+    FarmsRepository,
+    HarvestsRepository,
+    PlantedCropsRepository,
+  ],
 })
 export class DatabaseModule {}
