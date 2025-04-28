@@ -16,6 +16,7 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
       playground: false,
+      introspection: true,
       plugins: [
         ApolloServerPluginLandingPageLocalDefault({
           embed: true,
