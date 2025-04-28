@@ -16,7 +16,22 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
       playground: false,
-      plugins: [ApolloServerPluginLandingPageLocalDefault()],
+      plugins: [
+        ApolloServerPluginLandingPageLocalDefault({
+          embed: true,
+          document: `
+          query {
+            dashboard {
+              totalFarms
+              totalHectares
+              byState { state count }
+              byCrop { crop count }
+              landUsage { arableArea vegetationArea }
+            }
+          }
+        `,
+        }),
+      ],
     }),
     ConfigModule.forRoot({
       validate: (env) => envSchema.parse(env),
