@@ -7,3 +7,14 @@ export class CreateHarvestRequestDto {
   @ApiProperty()
   year!: number;
 }
+
+export class CreateHarvestResponseDto {
+  @ApiProperty()
+  statusCode!: number;
+
+  @ApiProperty()
+  message!: string;
+
+  @ApiProperty()
+  id!: string;
+}

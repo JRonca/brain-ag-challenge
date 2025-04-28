@@ -22,3 +22,14 @@ export class CreateFarmRequestDto {
   @ApiProperty()
   vegetationArea!: number;
 }
+
+export class CreateFarmResponseDto {
+  @ApiProperty()
+  statusCode!: number;
+
+  @ApiProperty()
+  message!: string;
+
+  @ApiProperty()
+  id!: string;
+}

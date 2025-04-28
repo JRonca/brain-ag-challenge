@@ -10,12 +10,16 @@ import {
   ApiBadRequestResponse,
   ApiBody,
   ApiNotFoundResponse,
+  ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { z } from 'zod';
 import { ZodValidationPipe } from '../pipes/zod-validation.pipe';
 import { CreateFarmUseCase } from '@domain/use-cases/create-farm';
-import { CreateFarmRequestDto } from './dtos/create-farm.controller.dto';
+import {
+  CreateFarmRequestDto,
+  CreateFarmResponseDto,
+} from './dtos/create-farm.controller.dto';
 import { ErrorResponseDto } from './dtos/error-response.dto';
 import { ResourceNotFoundError } from '@core/errors/resource-not-found-error';
 
@@ -46,6 +50,9 @@ export class CreateFarmController {
   @ApiBadRequestResponse({
     description: 'Validation failed or invalid total area.',
     type: ErrorResponseDto,
+  })
+  @ApiOkResponse({
+    type: CreateFarmResponseDto,
   })
   async handle(@Body() body: CreateFarmBodySchema) {
     const {
@@ -80,5 +87,11 @@ export class CreateFarmController {
 
       throw new BadRequestException(result.value.message);
     }
+
+    return {
+      statusCode: 201,
+      message: 'Farm created successfully',
+      id: result.value.farm.id.toString(),
+    };
   }
 }
