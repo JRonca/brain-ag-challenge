@@ -14,13 +14,13 @@ export class ListFarmerUseCase {
     page,
     limit,
   }: ListFarmerUseCaseRequestDTO): Promise<ListFarmerUseCaseResponseDTO> {
-    const listFarmer = await this.farmersRepository.list({
+    const farmers = await this.farmersRepository.list({
       page,
       limit,
     });
 
     return right({
-      farmers: listFarmer,
+      farmers,
     });
   }
 }

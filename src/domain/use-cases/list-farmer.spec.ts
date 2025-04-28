@@ -26,7 +26,7 @@ describe('List Farmers Use Case', () => {
     }
   });
 
-  it('should be able to  not create a farmer with the same document', async () => {
+  it('should be able to paginate farmers correctly', async () => {
     for (let i = 0; i < 22; i++) {
       const farmer = makeFarmer();
       await inMemoryFarmersRepository.create(farmer);

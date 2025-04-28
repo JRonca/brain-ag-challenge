@@ -3,6 +3,7 @@ import { HarvestsRepository } from '@domain/repositories/harvest-repository';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { PrismaHarvestMapper } from '../mappers/prisma-harvest-mapper';
+import { PaginationParams } from '@core/repositories/pagination-params';
 
 @Injectable()
 export class PrismaHarvestsRepository implements HarvestsRepository {
@@ -30,5 +31,17 @@ export class PrismaHarvestsRepository implements HarvestsRepository {
     }
 
     return PrismaHarvestMapper.toDomain(harvest);
+  }
+
+  async list({ page, limit }: PaginationParams): Promise<Harvest[]> {
+    const harvests = await this.prisma.harvest.findMany({
+      skip: (page - 1) * limit,
+      take: limit,
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+    return harvests.map(PrismaHarvestMapper.toDomain);
   }
 }

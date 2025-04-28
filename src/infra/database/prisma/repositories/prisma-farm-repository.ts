@@ -3,6 +3,7 @@ import { FarmsRepository } from '@domain/repositories/farm-repository';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { PrismaFarmMapper } from '../mappers/prisma-farm-mapper';
+import { PaginationParams } from '@core/repositories/pagination-params';
 
 @Injectable()
 export class PrismaFarmsRepository implements FarmsRepository {
@@ -30,6 +31,18 @@ export class PrismaFarmsRepository implements FarmsRepository {
     }
 
     return PrismaFarmMapper.toDomain(farm);
+  }
+
+  async list({ page, limit }: PaginationParams): Promise<Farm[]> {
+    const farms = await this.prisma.farm.findMany({
+      skip: (page - 1) * limit,
+      take: limit,
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+    return farms.map(PrismaFarmMapper.toDomain);
   }
 
   async countFarms(): Promise<number> {
