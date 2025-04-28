@@ -1,0 +1,30 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type CropCount {
+  count: Int!
+  crop: String!
+}
+
+type DashboardMetrics {
+  byCrop: [CropCount!]!
+  byState: [StateFarmCount!]!
+  landUsage: LandUsage!
+  totalFarms: Int!
+  totalHectares: Float!
+}
+
+type LandUsage {
+  arableArea: Float!
+  vegetationArea: Float!
+}
+
+type Query {
+  dashboard: DashboardMetrics!
+}
+
+type StateFarmCount {
+  count: Int!
+  state: String!
+}

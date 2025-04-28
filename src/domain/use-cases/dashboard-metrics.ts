@@ -1,7 +1,9 @@
 import { DashboardMetricsDTO } from '@domain/use-cases/dtos/dashboard-metrics.dto';
 import { FarmsRepository } from '@domain/repositories/farm-repository';
 import { PlantedCropsRepository } from '@domain/repositories/planted-crop-repository';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class GetDashboardMetricsUseCase {
   constructor(
     private readonly farmsRepository: FarmsRepository,
