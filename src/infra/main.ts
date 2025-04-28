@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { EnvService } from './env/env.service';
+import { LoggingInterceptor } from './http/interceptors/logging-interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -23,6 +24,8 @@ async function bootstrap() {
 
   const configService = app.get(EnvService);
   const port = configService.get('PORT');
+
+  app.useGlobalInterceptors(new LoggingInterceptor());
 
   await app.listen(port);
 }

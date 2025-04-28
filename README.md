@@ -1,85 +1,70 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Brain Agriculture API |  [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=JRonca_brain-ag-challenge&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=JRonca_brain-ag-challenge)
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Descrição do Projeto
+O **Brain Agriculture API** é uma aplicação backend desenvolvida com o intuito de gerenciar informações relacionadas à produção rural. O sistema permite o cadastro e a visualização de dados sobre propriedades rurais, produtores, safras e culturas, oferecendo uma visão completa do gerenciamento de áreas agrícolas. A solução foi projetada para ser escalável, com arquitetura moderna e modular, utilizando o NestJS como framework principal e Prisma como ORM para facilitar a interação com o banco de dados.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Além do gerenciamento básico de dados sobre propriedades rurais, o sistema oferece uma interface GraphQL para consultas eficientes e flexíveis, permitindo que os usuários possam extrair informações complexas de maneira simplificada. Também foi implementado um dashboard que oferece métricas relevantes e relatórios sobre as propriedades cadastradas.
 
-## Description
+## Tecnologias Utilizadas
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- NestJS: Framework Node.js para construção de aplicações escaláveis e eficientes.
+- GraphQL: API para consultas e manipulação de dados com flexibilidade e alta performance.
+- Prisma ORM: Ferramenta para facilitar a comunicação com o banco de dados PostgreSQL.
+- PostgreSQL: Banco de dados relacional utilizado para armazenar as informações sobre as propriedades e safras.
+- Docker: Utilizado para containerizar a aplicação, garantindo consistência no ambiente de desenvolvimento e produção.
+- Swagger: Documentação automática da API RESTful, permitindo fácil integração com outras ferramentas e visualização das endpoints.
+- SonarQube: Ferramenta de análise de qualidade de código, utilizada para garantir a qualidade e manutenibilidade do código da aplicação.
 
-## Project setup
+## Como rodar localmente
 
 ```bash
-$ npm install
+git clone <repo>
+cd <repo>
+cp .env.example .env
+docker-compose up --build
+# Subirá a aplicação e o banco de dados PostgreSQL
 ```
 
-## Compile and run the project
+### Como acessar o app
 
-```bash
-# development
-$ npm run start
+Swagger: http://localhost:3000/api
 
-# watch mode
-$ npm run start:dev
+GraphQL playground: http://localhost:3000/graphql
 
-# production mode
-$ npm run start:prod
+## Endpoints
+
+- Dashboard (POST): Consulta GraphQL para obter informações gerais sobre o sistema.
+- Farmer (POST): Cria um novo produtor.
+- Farmer (GET): Obtém a lista de produtores com suporte a paginação.
+- Farmer (PUT): Atualiza as informações de um produtor específico.
+- Farmer (DELETE): Deleta um produtor específico.
+- Farm (POST): Cria uma nova fazenda associada a um produtor.
+- Harvest (POST): Registra uma nova safra.
+- Planted Crop (POST): Registra uma nova cultura plantada.
+
+## Testes
+
+Comando para rodar testes unitários + e2e:
+
+```Bash
+npm install --legacy-peer-deps
+npm run test:unit # Unitários
+npm run test:e2e # E2E
+npm run test:all # Ambos com coverage
 ```
+![Testes](./images/coverageJest.png)
 
-## Run tests
+## Qualidade de Código
 
-```bash
-# unit tests
-$ npm run test
+![SonarQube](./images/sonarQube.png)
 
-# e2e tests
-$ npm run test:e2e
 
-# test coverage
-$ npm run test:cov
-```
+## Diferenciais
 
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- Clean Architecture (separação clara de camadas).
+- Validações usando Zod.
+- Interceptadores e Pipes no NestJS.
+- Tratamento de erros global.
+- Logs estruturados.
+- Banco isolado para testes e2e.
+- Testes automatizados no CI.
