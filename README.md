@@ -5,6 +5,12 @@ O **Brain Agriculture API** é uma aplicação backend desenvolvida com o intuit
 
 Além do gerenciamento básico de dados sobre propriedades rurais, o sistema oferece uma interface GraphQL para consultas eficientes e flexíveis, permitindo que os usuários possam extrair informações complexas de maneira simplificada. Também foi implementado um dashboard que oferece métricas relevantes e relatórios sobre as propriedades cadastradas.
 
+## 📦 Deploy
+
+O projeto está disponível online:  
+👉 [Acesse aqui o Swagger da API Rest](https://brain-agriculture-api.onrender.com/api)
+👉 [Acesse aqui a API GraphQL](https://brain-agriculture-api.onrender.com/graphql)
+
 ## Tecnologias Utilizadas
 
 - NestJS: Framework Node.js para construção de aplicações escaláveis e eficientes.
