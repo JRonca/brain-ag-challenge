@@ -18,6 +18,8 @@ import { ListFarmController } from './controllers/list-farm.controller';
 import { ListFarmUseCase } from '@domain/use-cases/list-farm';
 import { ListHarvestController } from './controllers/list-harvest.controller';
 import { ListHarvestUseCase } from '@domain/use-cases/list-harvest';
+import { ListPlantedCropController } from './controllers/list-planted-crop.controller';
+import { ListPlantedCropUseCase } from '@domain/use-cases/list-planted-crop';
 
 @Module({
   imports: [DatabaseModule],
@@ -31,6 +33,7 @@ import { ListHarvestUseCase } from '@domain/use-cases/list-harvest';
     CreatePlantedCropController,
     ListFarmController,
     ListHarvestController,
+    ListPlantedCropController,
   ],
   providers: [
     CreateFarmerUseCase,
@@ -42,6 +45,7 @@ import { ListHarvestUseCase } from '@domain/use-cases/list-harvest';
     CreatePlantedCropUseCase,
     ListFarmUseCase,
     ListHarvestUseCase,
+    ListPlantedCropUseCase,
   ],
 })
 export class HttpModule {}

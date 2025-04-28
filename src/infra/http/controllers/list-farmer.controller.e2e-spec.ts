@@ -28,12 +28,12 @@ describe('List Farmer (E2E)', () => {
     const documentCPF = generateValidCPF();
     const documentCNPJ = generateValidCNPJ();
 
-    await farmerFactory.makePrismaFarmer({
+    const farmer1 = await farmerFactory.makePrismaFarmer({
       document: documentCPF,
       documentType: 'CPF',
     });
 
-    await farmerFactory.makePrismaFarmer({
+    const farmer2 = await farmerFactory.makePrismaFarmer({
       document: documentCNPJ,
       documentType: 'CNPJ',
     });
@@ -45,12 +45,14 @@ describe('List Farmer (E2E)', () => {
     expect(response.body).toEqual({
       farmers: expect.arrayContaining([
         expect.objectContaining({
+          id: farmer1.id.toString(),
           document: documentCPF,
-          documentType: 'CPF',
+          documentType: farmer1.documentType,
         }),
         expect.objectContaining({
+          id: farmer2.id.toString(),
           document: documentCNPJ,
-          documentType: 'CNPJ',
+          documentType: farmer2.documentType,
         }),
       ]),
       page: 1,

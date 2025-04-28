@@ -3,6 +3,7 @@ import { PlantedCropsRepository } from '@domain/repositories/planted-crop-reposi
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { PrismaPlantedCropMapper } from '../mappers/prisma-planted-crop-mapper';
+import { PaginationParams } from '@core/repositories/pagination-params';
 
 @Injectable()
 export class PrismaPlantedCropsRepository implements PlantedCropsRepository {
@@ -16,6 +17,18 @@ export class PrismaPlantedCropsRepository implements PlantedCropsRepository {
     });
 
     return PrismaPlantedCropMapper.toDomain(createdPlantedCrop);
+  }
+
+  async list({ page, limit }: PaginationParams): Promise<PlantedCrop[]> {
+    const plantedCrops = await this.prisma.plantedCrop.findMany({
+      skip: (page - 1) * limit,
+      take: limit,
+      orderBy: {
+        id: 'desc',
+      },
+    });
+
+    return plantedCrops.map(PrismaPlantedCropMapper.toDomain);
   }
 
   async groupByCrop(): Promise<{ crop: string; count: number }[]> {

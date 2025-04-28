@@ -1,3 +1,4 @@
+import { PaginationParams } from '@core/repositories/pagination-params';
 import { PlantedCrop } from '@domain/entities/planted-crop';
 import { PlantedCropsRepository } from '@domain/repositories/planted-crop-repository';
 
@@ -7,6 +8,10 @@ export class InMemoryPlantedCropsRepository implements PlantedCropsRepository {
   async create(plantedCrop: PlantedCrop): Promise<PlantedCrop> {
     this.items.push(plantedCrop);
     return plantedCrop;
+  }
+
+  async list({ page, limit }: PaginationParams): Promise<PlantedCrop[]> {
+    return this.items.slice((page - 1) * limit, page * limit);
   }
 
   async groupByCrop(): Promise<{ crop: string; count: number }[]> {
