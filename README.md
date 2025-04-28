@@ -8,8 +8,8 @@ Além do gerenciamento básico de dados sobre propriedades rurais, o sistema ofe
 ## 📦 Deploy
 
 O projeto está disponível online:  
-👉 [Acesse aqui o Swagger da API Rest](https://brain-agriculture-api.onrender.com/api)
-👉 [Acesse aqui a API GraphQL](https://brain-agriculture-api.onrender.com/graphql)
+- 👉 [Acesse aqui o Swagger da API Rest](https://brain-agriculture-api.onrender.com/api)
+- 👉 [Acesse aqui a API GraphQL](https://brain-agriculture-api.onrender.com/graphql)
 
 ## Tecnologias Utilizadas
 
